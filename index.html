@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forge: Lift, Train, Share</title>
+<meta name="description" content="The lifting log that coaches you. Fast set logging on iPhone and Apple Watch, plans that adapt after every session, and training with friends.">
+<meta name="theme-color" content="#ff6124">
+<meta property="og:title" content="Forge: Lift, Train, Share"><meta property="og:description" content="The lifting log that coaches you. Fast set logging on iPhone and Apple Watch, plans that adapt after every session, and training with friends.">
+<meta property="og:image" content="brand/forge-logo-512.png"><meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="brand/forge-logo-120.png"><link rel="apple-touch-icon" href="brand/forge-logo-512.png">
+<style>
+:root{
+  --accent:#ff6124;--accent-2:#ff8a3d;--ink:#141416;--text:#1c1c1e;--muted:#6b6b73;--bg:#fbfaf8;--card:#ffffff;
+  --line:#ebe8e4;--soft:#f3f1ee;--green:#22b573;--shadow:0 20px 60px -20px rgba(20,20,22,.25);
+  --radius:22px;--max:1120px;
+}
+@media (prefers-color-scheme:dark){:root{--text:#f2f2f4;--muted:#a2a2ab;--bg:#0f0f11;--card:#1a1a1d;--line:#2a2a2f;--soft:#202024;--shadow:0 20px 60px -20px rgba(0,0,0,.7)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.rounded{font-family:ui-rounded,"SF Pro Rounded",-apple-system,"Nunito",sans-serif}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:10;backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:var(--text);letter-spacing:-.01em}
+.brand img{width:32px;height:32px;border-radius:8px}
+.nav nav{margin-left:auto;display:flex;gap:22px;font-size:15px}
+.nav nav a{color:var(--muted)}.nav nav a:hover{color:var(--text);text-decoration:none}
+@media (max-width:640px){.nav nav a.hide-sm{display:none}}
+
+/* Hero */
+.hero{padding:72px 0 40px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);padding:6px 12px;border-radius:999px}
+h1{font-size:clamp(40px,6vw,68px);line-height:1.02;letter-spacing:-.035em;margin:18px 0 18px;font-weight:850}
+h1 .grad{background:linear-gradient(100deg,var(--accent),#ffb03a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:20px;color:var(--muted);max-width:34ch;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:14px;font-weight:700;font-size:16px;border:1px solid var(--line);color:var(--text);background:var(--card)}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media (prefers-color-scheme:dark){.btn.primary{background:#fff;color:#111;border-color:#fff}}
+.btn small{display:block;font-size:11px;font-weight:600;opacity:.7;line-height:1.1}
+.btn .big{display:block;line-height:1.1}
+.fine{font-size:14px;color:var(--muted);margin-top:14px}
+
+/* Phone mockups */
+.stage{position:relative;height:620px}
+.phone{position:absolute;width:300px;height:620px;border-radius:52px;background:#0c0c0e;padding:12px;box-shadow:var(--shadow),inset 0 0 0 2px #2a2a2e}
+.phone .screen{position:relative;height:100%;border-radius:41px;overflow:hidden;background:#f2f1ee;color:#1c1c1e;font-size:13px}
+.phone .island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:28px;border-radius:20px;background:#0c0c0e;z-index:3}
+.phone .status{display:flex;justify-content:space-between;padding:14px 26px 0;font-weight:700;font-size:13px}
+.phone.back{left:0;top:40px;transform:rotate(-6deg) scale(.92);opacity:.97}
+.phone.front{right:10px;top:0}
+.watch{position:absolute;left:-20px;bottom:-20px;width:150px;height:184px;border-radius:44px;background:#0c0c0e;padding:10px;box-shadow:var(--shadow),inset 0 0 0 2px #2a2a2e;z-index:4}
+.watch .screen{height:100%;border-radius:34px;background:#000;color:#fff;padding:16px 14px;font-size:12px}
+.watch .crown{position:absolute;right:-6px;top:52px;width:8px;height:30px;border-radius:4px;background:#2a2a2e}
+.watch .ex{color:#ff8a3d;font-weight:700;font-size:12px}
+.watch .num{font-size:30px;font-weight:800;line-height:1;margin:6px 0 2px;font-family:ui-rounded,-apple-system,sans-serif}
+.watch .sub{color:#9a9aa2;font-size:11px}
+.watch .hr{display:flex;align-items:center;gap:5px;margin-top:10px;color:#ff4d6d;font-weight:700}
+.watch .done{margin-top:10px;background:#ff6124;border-radius:12px;text-align:center;padding:7px;font-weight:800}
+
+.app{padding:8px 16px 16px}
+.app h4{margin:6px 0 10px;font-size:22px;font-weight:850;letter-spacing:-.02em}
+.mcard{background:#fff;border-radius:16px;padding:12px;margin-bottom:10px;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;background:#ffe3d6;color:#d9480f}
+.muted{color:#8a8a92}
+.setrow{display:grid;grid-template-columns:22px 1fr 1fr 1fr 26px;gap:6px;align-items:center;padding:6px 0;font-weight:600;font-size:12.5px;border-top:1px solid #f0eeea}
+.setrow:first-of-type{border-top:0}
+.setrow .n{color:#8a8a92;font-weight:700}
+.chk{width:22px;height:22px;border-radius:7px;background:#e9e7e3;display:grid;place-items:center;color:#fff;font-size:12px}
+.chk.on{background:#22b573}
+.setrow.doneRow{background:#eaf8f1;border-radius:8px;padding:6px 4px;margin:2px -4px}
+.pill{display:flex;align-items:center;justify-content:space-between;background:#1c1c1e;color:#fff;border-radius:14px;padding:10px 14px;font-weight:700}
+.pill .t{font-size:20px;font-family:ui-rounded,-apple-system,sans-serif}
+.plates{display:flex;gap:3px;align-items:center;margin-top:6px}
+.plate{width:8px;border-radius:2px}
+.coach{background:linear-gradient(135deg,#fff3ec,#fff);border:1px solid #ffd9c7}
+.ring{width:44px;height:44px;border-radius:50%;background:conic-gradient(#22b573 0 92%,#e9e7e3 0);display:grid;place-items:center}
+.ring span{width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;color:#22b573}
+.tabbar{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.9);border-radius:26px;display:flex;justify-content:space-around;padding:10px 6px;font-size:9.5px;font-weight:700;color:#8a8a92;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.tabbar .on{color:#ff6124}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:10px;font-weight:700;color:#8a8a92}
+.week b{display:grid;place-items:center;height:30px;border-radius:9px;background:#f1efeb;color:#8a8a92;margin-top:4px;font-size:11px}
+.week b.done{background:#22b573;color:#fff}.week b.today{background:#ff6124;color:#fff}
+
+/* Sections */
+section{padding:84px 0}
+.kicker{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h2{font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-.03em;margin:10px 0 16px;font-weight:850}
+.sub2{font-size:19px;color:var(--muted);max-width:60ch}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.feature{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.feature .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 14%,transparent);font-size:22px;margin-bottom:14px}
+.feature h3{margin:0 0 6px;font-size:19px;letter-spacing:-.01em}
+.feature p{margin:0;color:var(--muted);font-size:16px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.split.rev .media{order:-1}
+.bullets{list-style:none;padding:0;margin:24px 0 0}
+.bullets li{position:relative;padding-left:30px;margin:12px 0;color:var(--muted)}
+.bullets li b{color:var(--text)}
+.bullets li:before{content:"";position:absolute;left:0;top:8px;width:18px;height:18px;border-radius:6px;background:var(--accent);mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/contain no-repeat;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/contain no-repeat}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
+.panel .mcard{background:var(--soft);color:var(--text)}
+.panel .coach{background:color-mix(in srgb,var(--accent) 10%,var(--card));border-color:color-mix(in srgb,var(--accent) 35%,transparent);color:var(--text)}
+.panel .muted{color:var(--muted)}
+.chart{width:100%;height:auto;display:block}
+.post{display:flex;gap:10px;align-items:center}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px}
+.kudos{display:flex;gap:16px;margin-top:10px;font-weight:700;font-size:14px;color:var(--muted)}
+.dark{background:#111113;color:#f2f2f4}
+.dark .sub2,.dark .feature p{color:#a2a2ab}
+.dark .feature{background:#19191c;border-color:#2a2a2f}
+.privacy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:10px 0}
+summary{cursor:pointer;font-weight:700;list-style:none}summary::-webkit-details-marker{display:none}
+summary:after{content:"+";float:right;color:var(--accent);font-weight:800}
+details[open] summary:after{content:"–"}
+details p{color:var(--muted);margin:10px 0 0}
+.final{text-align:center;padding:96px 0}
+.final img{width:84px;height:84px;border-radius:20px;box-shadow:var(--shadow)}
+footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+footer nav{display:flex;gap:18px;flex-wrap:wrap}footer a{color:var(--muted)}
+
+/* Document pages */
+.doc{max-width:760px;margin:0 auto;padding:56px 20px 40px}
+.doc h1{font-size:clamp(34px,5vw,48px);margin:8px 0 6px}
+.doc .meta{color:var(--muted);margin-bottom:28px}
+.doc h2{font-size:22px;margin:34px 0 8px;letter-spacing:-.01em}
+.doc p,.doc li{color:color-mix(in srgb,var(--text) 86%,var(--muted))}
+.doc ul{padding-left:22px}
+.notice{background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:16px;padding:16px 18px;margin:18px 0}
+
+@media (max-width:900px){
+  .hero .wrap,.split{grid-template-columns:1fr}
+  .split.rev .media{order:0}
+  .stage{height:640px;max-width:340px;margin:0 auto;width:100%}
+  .phone.back{display:none}.phone.front{left:calc(50% - 150px);right:auto}
+  .watch{left:auto;right:-10px;bottom:-40px;transform:scale(.8);transform-origin:bottom right}
+  .stage{margin-bottom:30px}
+  .grid3,.privacy-grid{grid-template-columns:1fr}
+  section{padding:60px 0}.hero{padding:40px 0 10px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .float{animation:float 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+}
+</style>
+</head><body>
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="brand/forge-logo-120.png" alt="">Forge</a>
+  <nav><a class="hide-sm" href="index.html#features">Features</a><a class="hide-sm" href="index.html#privacy">Privacy</a><a href="index.html#faq">FAQ</a><a href="support.html">Support</a></nav>
+</div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">iPhone + Apple Watch</span>
+      <h1>The lifting log<br>that <span class="grad">coaches you.</span></h1>
+      <p class="lede">Log every set in a tap. Follow a plan that adjusts after every session. Lift with friends.</p>
+      <div class="cta">
+        <span class="btn primary"><span><small>Coming soon to the</small><span class="big"> App Store</span></span></span>
+        <a class="btn" href="#features">See what's inside</a>
+      </div>
+      <p class="fine">Free. No ads. Your workouts stay in your iCloud.</p>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="phone back">
+<div class="screen"><div class="island"></div>
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="app">
+    <h4 class="rounded" style="margin-top:14px">Plan</h4>
+    <div class="mcard">
+      <div class="muted" style="font-size:11px;font-weight:700">STRENGTH BLOCK · WEEK 3 OF 12</div>
+      <div class="week" style="margin-top:8px"><div>M<b class="done">✓</b></div><div>T<b></b></div><div>W<b class="done">✓</b></div><div>T<b class="today">•</b></div><div>F<b></b></div><div>S<b>·</b></div><div>S<b></b></div></div>
+    </div>
+    <div class="mcard">
+      <div class="mrow"><div><div class="muted" style="font-size:11px;font-weight:700">TODAY · 55 MIN</div><b style="font-size:16px">Lower B</b></div><span class="tag">Push week</span></div>
+      <div style="margin-top:8px;font-size:12px;line-height:1.7">Squat 4 × 5 @ 120 kg<br>Romanian Deadlift 3 × 8<br>Walking Lunge 3 × 10<br>Calf Raise 3 × 12</div>
+    </div>
+    <div class="mcard">
+      <div class="mrow"><div class="ring"><span>92</span></div><div style="flex:1"><b>Load on point</b><div class="muted" style="font-size:11.5px">Last session matched the plan. Weights go up as scheduled.</div></div></div>
+    </div>
+  </div>
+  <div class="tabbar"><span>Home</span><span class="on">Plan</span><span>Record</span><span>Groups</span><span>You</span></div>
+</div></div>
+      <div class="phone front float">
+<div class="screen"><div class="island"></div>
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="app">
+    <div class="mrow" style="margin-top:6px"><span class="muted" style="font-weight:700">42:18</span><span class="tag" style="background:#22b573;color:#fff">Finish</span></div>
+    <h4 class="rounded">Upper A</h4>
+    <div class="mcard">
+      <div class="mrow"><b>Bench Press</b><span class="tag">Week 3 · Push</span></div>
+      <div class="muted" style="font-size:11px;margin:2px 0 6px">Last time 82.5 kg × 5 · target RPE 8</div>
+      <div class="setrow muted" style="font-size:10px;border:0"><span>SET</span><span>KG</span><span>REPS</span><span>RPE</span><span></span></div>
+      <div class="setrow doneRow"><span class="n">1</span><span>85</span><span>5</span><span>7.5</span><span class="chk on">✓</span></div>
+      <div class="setrow doneRow"><span class="n">2</span><span>85</span><span>5</span><span>8</span><span class="chk on">✓</span></div>
+      <div class="setrow"><span class="n">3</span><span>85</span><span>5</span><span class="muted">8</span><span class="chk"></span></div>
+      <div class="plates"><span class="muted" style="font-size:10px;font-weight:700;margin-right:4px">PER SIDE</span><span class="plate" style="height:34px;background:#e03131"></span><span class="plate" style="height:18px;background:#adb5bd"></span><span class="plate" style="height:14px;background:#495057"></span><span class="muted" style="font-size:10px;margin-left:4px">25 + 5 + 2.5</span></div>
+    </div>
+    <div class="pill"><span>Rest</span><span class="t">1:48</span><span style="opacity:.7">+30s</span></div>
+    <div class="mcard coach" style="margin-top:10px">
+      <div style="font-weight:800;color:#d9480f;font-size:11px">COACH</div>
+      <div style="font-weight:600">Strong sets. Keep 85 kg for set 3, then add 2.5 kg next session.</div>
+    </div>
+  </div>
+  <div class="tabbar"><span>Home</span><span>Plan</span><span class="on">Record</span><span>Groups</span><span>You</span></div>
+</div></div>
+      
+<div class="watch"><div class="crown"></div><div class="screen">
+  <div class="ex">Squat · Set 3/4</div>
+  <div class="num">120<span style="font-size:14px;color:#9a9aa2"> kg</span></div>
+  <div class="sub">× 5 reps @ RPE 8</div>
+  <div class="hr">♥ 128</div>
+  <div class="done">Done</div>
+</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="kicker">Everything you need</div>
+    <h2>Serious logging.<br>A coach in your pocket.</h2>
+    <p class="sub2">Forge does the bookkeeping and the planning so your time in the gym goes to lifting.</p>
+    <div class="grid3">
+      <div class="feature"><div class="ic">⚡️</div><h3>One-tap sets</h3><p>Last session's weights and reps are filled in. Tick a set and the rest timer starts.</p></div>
+      <div class="feature"><div class="ic">🧭</div><h3>Plans that adapt</h3><p>Built around your goal, schedule, and equipment. Miss reps and it steps back; beat them and it moves up.</p></div>
+      <div class="feature"><div class="ic">⌚️</div><h3>A real watch app</h3><p>Log with the Digital Crown, see heart rate, and leave your phone in the locker.</p></div>
+      <div class="feature"><div class="ic">🏋️</div><h3>Plate math and warm-ups</h3><p>Plates per side, ramp-up sets, supersets, drop sets, and RPE or reps in reserve.</p></div>
+      <div class="feature"><div class="ic">📈</div><h3>Progress you can see</h3><p>Estimated max trends, rep maxes, records, muscle volume, and weekly reviews.</p></div>
+      <div class="feature"><div class="ic">🤝</div><h3>Train with friends</h3><p>Share workouts, give kudos, join clubs, and take on monthly challenges.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--soft)">
+  <div class="wrap split">
+    <div>
+      <div class="kicker">Plans</div>
+      <h2>A program built for you, adjusted every session.</h2>
+      <p class="sub2">Answer a few questions about your goal, days, time, equipment, and any sore spots. Forge builds a multi-week program and explains why.</p>
+      <ul class="bullets">
+        <li><b>Coached sets.</b> Today's weights come from what you actually lifted, with a target effort.</li>
+        <li><b>Real life friendly.</b> Move a session, shorten it to 30 minutes, or swap an exercise when the rack is taken.</li>
+        <li><b>Built-in deloads and re-tests</b> so you keep progressing for months.</li>
+        <li><b>Or pick a program:</b> beginner full body, upper/lower, meet prep, home dumbbells, and more.</li>
+      </ul>
+    </div>
+    <div class="media"><div class="panel">
+      <div class="mcard"><div class="mrow"><b>Week 3 review</b><span class="tag" style="background:#d3f9e4;color:#1b7a4c">3 of 3 done</span></div>
+        <p class="muted" style="margin:6px 0 0;font-size:15px">Squat moved up 5 kg and every bench set landed at RPE 8. Next week is the hardest of the block, then a deload.</p></div>
+      <div class="mcard"><div class="mrow"><span>Squat</span><b>110 → 115 kg</b></div><div class="mrow" style="margin-top:6px"><span>Bench Press</span><b>82.5 → 85 kg</b></div><div class="mrow" style="margin-top:6px"><span>Deadlift</span><b>140 → 145 kg</b></div></div>
+      <div class="mcard coach" style="margin:0"><b style="color:#d9480f;font-size:12px">COACH</b><div>Knee feeling it? I can swap lunges for split squats for two weeks. <span style="color:#ff6124;font-weight:700">Apply</span></div></div>
+    </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split rev">
+    <div>
+      <div class="kicker">Progress</div>
+      <h2>Watch your numbers climb.</h2>
+      <p class="sub2">Every session updates your estimated max, rep records, and weekly volume per muscle, with a projection toward your goal.</p>
+      <ul class="bullets">
+        <li><b>Records</b> for every lift at 1–12 reps.</li>
+        <li><b>Muscle balance</b> so nothing gets left behind.</li>
+        <li><b>Badges</b> for plate milestones, streaks, and the 1,000 lb club.</li>
+      </ul>
+    </div>
+    <div class="media"><div class="panel">
+      <div class="mrow"><div><div class="muted" style="font-size:13px;font-weight:700">SQUAT · ESTIMATED MAX</div><div class="rounded" style="font-size:34px;font-weight:850">131 kg</div></div><span class="tag" style="background:#d3f9e4;color:#1b7a4c">+1.4 kg / week</span></div>
+      
+<svg class="chart" viewBox="0 0 520 220" role="img" aria-label="Estimated max rising over twelve weeks with a dashed projection">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6124" stop-opacity=".28"/><stop offset="1" stop-color="#ff6124" stop-opacity="0"/></linearGradient></defs>
+  <g stroke="currentColor" stroke-opacity=".08"><line x1="0" y1="50" x2="520" y2="50"/><line x1="0" y1="110" x2="520" y2="110"/><line x1="0" y1="170" x2="520" y2="170"/></g>
+  <path d="M10 180 L60 172 L110 166 L160 160 L210 150 L260 146 L310 132 L360 124 L360 210 L10 210 Z" fill="url(#g)"/>
+  <polyline points="10,180 60,172 110,166 160,160 210,150 260,146 310,132 360,124" fill="none" stroke="#ff6124" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="360,124 510,92" fill="none" stroke="#ff6124" stroke-width="3" stroke-dasharray="8 7" stroke-opacity=".6"/>
+  <g fill="#ff6124"><circle cx="10" cy="180" r="5"/><circle cx="110" cy="166" r="5"/><circle cx="210" cy="150" r="5"/><circle cx="310" cy="132" r="5"/><circle cx="360" cy="124" r="6"/></g>
+  <circle cx="510" cy="92" r="7" fill="none" stroke="#ff6124" stroke-width="3"/>
+  <text x="440" y="80" font-size="13" font-weight="700" fill="#ff6124">Goal 140 kg</text>
+</svg>
+    </div></div>
+  </div>
+</section>
+
+<section style="background:var(--soft)">
+  <div class="wrap split">
+    <div>
+      <div class="kicker">Together</div>
+      <h2>Lifting is better with friends.</h2>
+      <p class="sub2">Post a workout with photos, cheer on your gym crew, and climb your club's weekly leaderboard.</p>
+      <ul class="bullets">
+        <li><b>You choose who sees you:</b> everyone, followers you approve, or only you.</li>
+        <li><b>Clubs</b> with weekly volume and lift leaderboards.</li>
+        <li><b>Monthly challenges</b> with finisher badges.</li>
+      </ul>
+    </div>
+    <div class="media"><div class="panel">
+      <div class="post"><span class="avatar" style="background:linear-gradient(135deg,#ff6124,#ffb03a)">AL</span><div><b>Alex</b><div class="muted" style="font-size:13px">This morning · Week 6 · Pull</div></div></div>
+      <h3 style="margin:12px 0 6px;font-size:22px;letter-spacing:-.02em">Tuesday Deadlift Day · 1 PR</h3>
+      <div class="mrow" style="max-width:360px"><div><div class="rounded" style="font-size:22px;font-weight:800">1h 05m</div><div class="muted" style="font-size:12px">Time</div></div><div><div class="rounded" style="font-size:22px;font-weight:800">8,240 kg</div><div class="muted" style="font-size:12px">Volume</div></div><div><div class="rounded" style="font-size:22px;font-weight:800">16</div><div class="muted" style="font-size:12px">Sets</div></div></div>
+      <div class="mcard" style="margin-top:12px"><div class="mrow"><span>5 × Deadlift 🏆</span><b>180 kg × 3</b></div><div class="mrow"><span>4 × Barbell Row</span><b>90 kg × 8</b></div></div>
+      <div class="kudos"><span style="color:#ff6124">👏 12 kudos</span><span>💬 4 comments</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="dark" id="privacy">
+  <div class="wrap">
+    <div class="kicker">Privacy</div>
+    <h2>Your training, your data.</h2>
+    <p class="sub2">No ads, no trackers, nothing sold. Ever.</p>
+    <div class="privacy-grid">
+      <div class="feature"><div class="ic">☁️</div><h3>Your own iCloud</h3><p>Workouts, plans, and measurements sync through your iCloud account, not our servers.</p></div>
+      <div class="feature"><div class="ic">❤️</div><h3>Health stays on your iPhone</h3><p>Sleep and heart data tune your sessions on device and are never uploaded.</p></div>
+      <div class="feature"><div class="ic">🔒</div><h3>Social is optional</h3><p>Use Forge without an account. If you join, you control visibility and can export or delete everything.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:820px">
+    <div class="kicker">FAQ</div>
+    <h2>Questions</h2>
+    <details><summary>How much does Forge cost?</summary><p>Forge is free, with no ads.</p></details>
+    <details><summary>Do I need an account?</summary><p>No. Logging, plans, the watch app, and progress all work without one. An account adds sharing, friends, clubs, and leaderboards.</p></details>
+    <details><summary>Does it work without my phone?</summary><p>Yes. The Apple Watch app logs a full workout on its own and syncs when your phone is back in range.</p></details>
+    <details><summary>Can I bring my history from Strong?</summary><p>Yes. Export a CSV from Strong and import it in Settings → Data.</p></details>
+    <details><summary>Is it safe to follow the plan?</summary><p>Forge adjusts weights from what you log and backs off when sets get missed, but it isn't medical advice. Train with good form, use safety equipment, and talk to a professional about pain or health conditions.</p></details>
+    <details><summary>How do I get help?</summary><p>In the app, go to Settings → Send Feedback in the app. More on the <a href="support.html">support page</a>.</p></details>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <img src="brand/forge-logo-512.png" alt="Forge app icon">
+    <h2 style="margin-top:22px">Lift. Train. Share.</h2>
+    <p class="sub2" style="margin:0 auto 26px">Forge is in beta and coming soon to the App Store.</p>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <span>© 2026 Forge. Not medical advice; train safely.</span>
+  <nav><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="community.html">Community Guidelines</a><a href="support.html">Support</a></nav>
+</div></footer>
+</body></html>
